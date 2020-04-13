@@ -22,6 +22,7 @@ class Graph extends Component {
     render() {
         const {graphdata} = this.state;
         const {max} = this.props;
+        console.log(graphdata)
         //const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400} ,{name: 'Page A', uv: 600, pv: 2400, amt: 2400} ,{name: 'Page A', uv: 800, pv: 2400, amt: 2400}]
         return (
             <div className = "graph">

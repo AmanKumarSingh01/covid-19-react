@@ -5,6 +5,7 @@ import Graph from './graph';
 import MtyhBusters from './Modal-Mythbusters';
 import ModalTable from './Modal-Table'
 import { Card } from 'react-bootstrap';
+import GraphStatewise from './GraphStatewise';
 
 class Dashboard extends Component {
     constructor(props){
@@ -17,7 +18,9 @@ class Dashboard extends Component {
             graphdata : [],
             gotLocation : false,
             found : {},
-            dist : ''
+            dist : '',
+            statewise_trends : [],
+            max_statewise : ''
         }
         this.location = this.location.bind(this);
         this.find = this.find.bind(this);
@@ -64,6 +67,37 @@ class Dashboard extends Component {
             }
             return(0)
         })
+
+        Axios.get('https://api.rootnet.in/covid19-in/stats/history')
+            .then(result => {
+                var d = result.data.data;
+                var arr = [] , temp1 , temp2 , temp3;
+                var month = ['Jan' , 'Feb' , 'Mar' , 'Apr' , 'May' , 'Jun' , 'Jul' , 'Aug' , 'Sept' , 'Oct' , 'Nov' ,'dec']
+                d.map(item => {
+                    var date = new Date(item.day);
+                    temp1 = month[date.getMonth()]
+                    temp2 = date.getDate();
+                    var d1 = item.regional
+                  
+                    d1.map(res => {
+                        if(res.loc === data){
+                            console.log(res.loc)
+                            temp3 = res.totalConfirmed;
+                            arr.push({
+                                date : temp1 + ' ' + temp2,
+                                confirmed : temp3
+                            })
+                        }
+                        return 0
+                    })
+                    
+
+
+
+                    return 0;
+                })
+                this.setState({statewise_trends : arr , max_statewise : temp3});
+            })
     }
 
 
@@ -80,6 +114,7 @@ class Dashboard extends Component {
                         <Card.Text style={{color:"green"}}>Cured {found.recovered} </Card.Text>
                         <Card.Text style={{color:"red"}}>Death {found.died} </Card.Text>
                         <Card.Text style={{color:"red"}}>You are approximatly : {parseFloat(this.state.dist).toFixed(2)} KM away form where last corona case was found</Card.Text>
+                        <GraphStatewise data = {this.state.statewise_trends} max = {this.state.max_statewise}/>
                     </Card.Body>
                     <Card.Footer style={{color:"red"}}>We request you to be in home</Card.Footer>
                 </Card>

@@ -34,7 +34,7 @@ class App  extends Component {
         <Dashboard data ={this.state.data}/>
 
         <div style={{backgroundColor:"#212121" , position:"bottom" , height:"60px" , bottom:"0px" , left:"0px" , lineHeight:"50px" , color:"#aaa" , textAlign:"center" , width:"100%"}}>
-           Made with love 	&#10084;.
+           Made with love 	&#10084;
         </div>
       </div>
 
