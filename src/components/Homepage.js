@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import './App.css';
+import './../App.css';
 import NavBar from './components/Navbar';
+import TABLE from './components/table';
 import Dashboard from './components/dashboard';
 
-class App  extends Component {
+
+class Homepage  extends Component {
 
 
   constructor(props){
@@ -21,26 +23,20 @@ class App  extends Component {
             const data = response.data;
             this.setState({data})
         })
-  
 }
   render (){
-    
     return (
-      <div className="App app" >
-        <div id = "aman"></div>
+      <div className="App">
         <div style={{transitionDelay:"0.2s"}}>
           <NavBar/>
         </div>
-        <Dashboard data ={this.state.data}/>
-
-        <div style={{backgroundColor:"#212121" , position:"bottom" , height:"60px" , bottom:"0px" , left:"0px" , lineHeight:"50px" , color:"#aaa" , textAlign:"center" , width:"100%"}}>
-           Made with love 	&#10084;.
-        </div>
+        <Dashboard/>
+        
+        <TABLE data = {this.state.data} />
       </div>
-
     )
   }
   
 }
 
-export default App;
+export default Homepage;
